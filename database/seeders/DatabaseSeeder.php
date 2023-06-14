@@ -3,7 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
+use App\Models\Tag;
+use App\Models\Task;
+use App\Models\TaskTag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +17,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        Tag::factory(10)->create();
+        Category::factory(25)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        foreach([5, 10, 15, 20, 25, 30] as $score) {
+            DB::table('scores')->insert([
+                'name' => "{$score} points",
+                'ball' => $score,
+                'updated_at' => now(),
+                'created_at' => now(),
+            ]);
+        }
+
+        Task::factory(150)->create();
+        
+        foreach(Task::all() as $task) {
+            for ($i=0; $i < random_int(1,4); $i++) {
+                $tag = Tag::find(random_int(1, 10));
+                $model = TaskTag::where(['tag_id' => $tag->id, 'task_id' => $task->id])->get();
+                if ($model->count() || empty($tag)) {
+                    continue;
+                }
+                DB::table('task_tags')->insert([
+                    'task_id' => $task->id,
+                    'tag_id' => $tag->id
+                ]);
+            }
+        }
     }
 }
