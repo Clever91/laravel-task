@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Score;
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,7 +26,8 @@ class TaskFactory extends Factory
             'description' => $description,
             'category_id' => Category::find(random_int(1, 25)),
             'score_id' => Score::find(random_int(1,6)),
-            'done' => random_int(1, 100) % 4 == 0
+            'done' => random_int(1, 100) % 4 == 0,
+            'active' => Task::STATE_ACTIVE
         ];
     }
 }
