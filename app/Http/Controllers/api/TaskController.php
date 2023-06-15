@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TaskCollection;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -22,6 +23,16 @@ class TaskController extends Controller
             $tasks->where('category_id', $request->input('score_id'));
         }
 
+        if ($request->has('q')) {
+            $q = $request->input('q');
+            $tasks->where(function($query) use ($q, $request) {
+                if ($request) {
+                    $query->where('title', 'LIKE', "%{$q}%");
+                    $query->orWhere('description', 'LIKE', "%{$q}%");
+                }
+            });
+        }
+
         return TaskResource::collection($tasks->get());
     }
 
@@ -34,7 +45,17 @@ class TaskController extends Controller
         }
 
         if ($request->has("score_id")) {
-            $tasks->where('category_id', $request->input('score_id'));
+            $tasks->where('score_id', $request->input('score_id'));
+        }
+
+        if ($request->has('q')) {
+            $q = $request->input('q');
+            $tasks->where(function($query) use ($q, $request) {
+                if ($request) {
+                    $query->where('title', 'LIKE', "%{$q}%");
+                    $query->orWhere('description', 'LIKE', "%{$q}%");
+                }
+            });
         }
 
         return new TaskCollection($tasks->paginate());
