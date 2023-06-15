@@ -23,6 +23,10 @@ class TaskController extends Controller
             $tasks->where('category_id', $request->input('score_id'));
         }
 
+        if ($request->has("done")) {
+            $tasks->where('done', $request->input('done'));
+        }
+
         if ($request->has('q')) {
             $q = $request->input('q');
             $tasks->where(function($query) use ($q, $request) {
@@ -46,6 +50,10 @@ class TaskController extends Controller
 
         if ($request->has("score_id")) {
             $tasks->where('score_id', $request->input('score_id'));
+        }
+
+        if ($request->has("done")) {
+            $tasks->where('done', $request->input('done'));
         }
 
         if ($request->has('q')) {
