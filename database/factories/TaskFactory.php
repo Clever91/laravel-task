@@ -25,7 +25,7 @@ class TaskFactory extends Factory
             'description' => $description,
             'category_id' => Category::find(random_int(1, 25)),
             'score_id' => Score::find(random_int(1,6)),
-            'state' => 1
+            'done' => random_int(1, 100) % 4 == 0
         ];
     }
 }

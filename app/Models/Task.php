@@ -10,6 +10,6 @@ class Task extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'description', 'category_id', 'score_id', 'state'
+        'title', 'description', 'category_id', 'score_id', 'done'
     ];
 }

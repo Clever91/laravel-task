@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('score_id')->unsigned();
-            $table->tinyInteger('state');
+            $table->tinyInteger('done');
             $table->timestamps();
         });
     }
