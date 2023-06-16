@@ -19,7 +19,7 @@ class TaskController extends Controller
         }
 
         if ($request->has('q')) {
-            $q = $request->input('q');
+            $q = trim($request->input('q'));
             $tasks->where(function($query) use ($q, $request) {
                 if ($request) {
                     $query->where('tasks.title', 'LIKE', "%{$q}%");

@@ -18,7 +18,7 @@
                         <form method="get" action="{{ route('tasks') }}">
                             <div class="input-group">
                                 <div class="form-outline">
-                                    <input type="search" name="q" class="form-control" value="{{ $_GET['q'] }}" />
+                                    <input type="search" name="q" class="form-control" value="{{ request()->input('q') }}" />
                                     <label class="form-label" for="form1">Search</label>
                                 </div>
                                 <button type="submit" class="btn btn-primary">
@@ -36,7 +36,7 @@
                         <div class="list-group list-group-light">
                             <a href="{{ route('tasks', []) }}" class="list-group-item list-group-item-action px-3 border-0" aria-current="true">All</a>
                             @foreach ($categories as $category)
-                            @if (isset($_GET["category_id"]) && $category->id == $_GET["category_id"])
+                            @if ($category->id == request()->input('category_id'))
                             <a href="{{ route('tasks', ['category_id' => $category->id]) }}" class="list-group-item list-group-item-action px-3 border-0 active" aria-current="true">{{ $category->title }}</a>
                             @else
                             <a href="{{ route('tasks', ['category_id' => $category->id]) }}" class="list-group-item list-group-item-action px-3 border-0">{{ $category->title }}</a>
