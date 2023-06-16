@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('task_tags', function (Blueprint $table) {
-            $table->bigInteger('task_id')->unsigned();
+        Schema::create('taggables', function (Blueprint $table) {
             $table->bigInteger('tag_id')->unsigned();
-            $table->unique(['task_id', 'tag_id']);
+            $table->bigInteger('taggable_id')->unsigned();
+            $table->string('taggable_type');
+            $table->unique(['tag_id', 'taggable_id', 'taggable_type']);
         });
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/tasks', function () {
+    $tasks = Task::all();
+    dd(Task::find(1)->tags);
+    return view('page.tasks', ['tasks' => $tasks]);
 });

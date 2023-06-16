@@ -16,7 +16,7 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $title = rtrim($this->faker->sentence(random_int(5,10)), '.');
+        $title = rtrim($this->faker->sentence(random_int(1,2)), '.');
         return [
             'title' => $title,
             'state' => 1

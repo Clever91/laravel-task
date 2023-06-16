@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Task extends Model
 {
@@ -16,4 +19,22 @@ class Task extends Model
         'title', 'description', 'category_id', 
         'score_id', 'done', 'active'
     ];
+
+    public function category(): HasOne
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
+    public function score(): HasOne
+    {
+        return $this->hasOne(Score::class, 'id', 'score_id');
+    }
+
+    /**
+     * Get all of the tags for the task.
+     */
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }

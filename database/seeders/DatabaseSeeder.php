@@ -5,8 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\Taggable;
 use App\Models\Task;
-use App\Models\TaskTag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -34,13 +34,14 @@ class DatabaseSeeder extends Seeder
         foreach(Task::all() as $task) {
             for ($i=0; $i < random_int(1,4); $i++) {
                 $tag = Tag::find(random_int(1, 10));
-                $model = TaskTag::where(['tag_id' => $tag->id, 'task_id' => $task->id])->get();
+                $model = Taggable::where(['tag_id' => $tag->id, 'taggable_id' => $task->id, 'taggable_type' => 'tasks'])->get();
                 if ($model->count() || empty($tag)) {
                     continue;
                 }
-                DB::table('task_tags')->insert([
-                    'task_id' => $task->id,
-                    'tag_id' => $tag->id
+                DB::table('taggables')->insert([
+                    'tag_id' => $tag->id,
+                    'taggable_id' => $task->id,
+                    'taggable_type' => 'tasks',
                 ]);
             }
         }
