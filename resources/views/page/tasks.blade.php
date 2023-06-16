@@ -34,15 +34,11 @@
                                     @endif />
                                 <label class="form-check-label">Unsolved</label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="done"/>
-                                <label class="form-check-label">All tasks</label>
-                            </div>
                         </div>
                         <div class="card-title">Score</div>
                         <div class="card-body">
                             <select class="form-select" name="score_id">
-                                <option value="">All tasks</option>
+                                <option value="">Select score</option>
                                 @foreach ($scores as $score)
                                 @if ($score->id == request()->input('score_id'))
                                 <option value="{{ $score->id }}" selected>{{ $score->name }}</option>
@@ -56,6 +52,8 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-filter"></i>
                             </button>
+                            <a href="{{ route('tasks') }}" class="btn btn-blue">
+                                <i class="fas fa-refresh"></i></a>
                         </div>
                     </form>
                 </div>
@@ -65,12 +63,13 @@
                     <div class="card-title"><h3>Categories</h3></div>
                     <div class="card-body">
                         <div class="list-group list-group-light">
-                            <a href="{{ route('tasks', []) }}" class="list-group-item list-group-item-action px-3 border-0" aria-current="true">All tasks</a>
                             @foreach ($categories as $category)
                             @if ($category->id == request()->input('category_id'))
-                            <a href="{{ route('tasks', ['category_id' => $category->id]) }}" class="list-group-item list-group-item-action px-3 border-0 active" aria-current="true">{{ $category->title }}</a>
+                            <a href="{{ route('tasks', array_merge(request()->all(), ['category_id' => $category->id])) }}" 
+                                class="list-group-item list-group-item-action px-3 border-0 active" aria-current="true">{{ $category->title }}</a>
                             @else
-                            <a href="{{ route('tasks', ['category_id' => $category->id]) }}" class="list-group-item list-group-item-action px-3 border-0">{{ $category->title }}</a>
+                            <a href="{{ route('tasks', array_merge(request()->all(), ['category_id' => $category->id])) }}" 
+                                class="list-group-item list-group-item-action px-3 border-0">{{ $category->title }}</a>
                             @endif
                             @endforeach
                         </div>

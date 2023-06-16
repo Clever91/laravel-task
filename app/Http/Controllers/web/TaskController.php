@@ -15,19 +15,19 @@ class TaskController extends Controller
     {
         $tasks = Task::where('active', Task::STATE_ACTIVE);
 
-        if ($request->has("category_id")) {
+        if ($request->filled("category_id")) {
             $tasks->where('category_id', $request->input('category_id'));
         }
 
-        if ($request->has("score_id")) {
+        if ($request->filled("score_id")) {
             $tasks->where('score_id', $request->input('score_id'));
         }
 
-        if ($request->has("done")) {
+        if ($request->filled("done")) {
             $tasks->where('done', $request->input('done') == "solved");
         }
 
-        if ($request->has('q')) {
+        if ($request->filled('q')) {
             $q = trim($request->input('q'));
             $tasks->where(function($query) use ($q, $request) {
                 if ($request) {

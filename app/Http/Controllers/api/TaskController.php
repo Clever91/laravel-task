@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TaskCollection;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -16,19 +15,19 @@ class TaskController extends Controller
         $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done')
             ->where('active', Task::STATE_ACTIVE);
 
-        if ($request->has("category_id")) {
+        if ($request->filled("category_id")) {
             $tasks->where('category_id', $request->input('category_id'));
         }
 
-        if ($request->has("score_id")) {
+        if ($request->filled("score_id")) {
             $tasks->where('score_id', $request->input('score_id'));
         }
 
-        if ($request->has("done")) {
+        if ($request->filled("done")) {
             $tasks->where('done', $request->input('done'));
         }
 
-        if ($request->has('q')) {
+        if ($request->filled('q')) {
             $q = $request->input('q');
             $tasks->where(function($query) use ($q, $request) {
                 if ($request) {
@@ -38,7 +37,7 @@ class TaskController extends Controller
             });
         }
 
-        if ($request->has('sort')) {
+        if ($request->filled('sort')) {
             $sort = $request->input('sort', 'category');
             $order = $request->input('order', 'asc');
             if ($sort == "category") {
@@ -60,19 +59,19 @@ class TaskController extends Controller
         $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done')
             ->where('active', Task::STATE_ACTIVE);
 
-        if ($request->has("category_id")) {
+        if ($request->filled("category_id")) {
             $tasks->where('category_id', $request->input('category_id'));
         }
 
-        if ($request->has("score_id")) {
+        if ($request->filled("score_id")) {
             $tasks->where('score_id', $request->input('score_id'));
         }
 
-        if ($request->has("done")) {
+        if ($request->filled("done")) {
             $tasks->where('done', $request->input('done'));
         }
 
-        if ($request->has('q')) {
+        if ($request->filled('q')) {
             $q = $request->input('q');
             $tasks->where(function($query) use ($q, $request) {
                 if ($request) {
@@ -82,7 +81,7 @@ class TaskController extends Controller
             });
         }
 
-        if ($request->has('sort')) {
+        if ($request->filled('sort')) {
             $sort = $request->input('sort', 'category');
             $order = $request->input('order', 'asc');
             if ($sort == "category") {
