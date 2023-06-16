@@ -18,7 +18,7 @@
                     </div>
                     <hr>
                     <form method="get" action="{{ route('tasks') }}">
-                        <div class="card-title"><h3>Filter</h3></div>
+                        <div class="card-title">Filter</div>
                         <div class="card-body">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="done" 
@@ -39,6 +39,19 @@
                                 <label class="form-check-label">All tasks</label>
                             </div>
                         </div>
+                        <div class="card-title">Score</div>
+                        <div class="card-body">
+                            <select class="form-select" name="score_id">
+                                <option value="">All tasks</option>
+                                @foreach ($scores as $score)
+                                @if ($score->id == request()->input('score_id'))
+                                <option value="{{ $score->id }}" selected>{{ $score->name }}</option>
+                                @else
+                                <option value="{{ $score->id }}">{{ $score->name }}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-filter"></i>
@@ -52,7 +65,7 @@
                     <div class="card-title"><h3>Categories</h3></div>
                     <div class="card-body">
                         <div class="list-group list-group-light">
-                            <a href="{{ route('tasks', []) }}" class="list-group-item list-group-item-action px-3 border-0" aria-current="true">All</a>
+                            <a href="{{ route('tasks', []) }}" class="list-group-item list-group-item-action px-3 border-0" aria-current="true">All tasks</a>
                             @foreach ($categories as $category)
                             @if ($category->id == request()->input('category_id'))
                             <a href="{{ route('tasks', ['category_id' => $category->id]) }}" class="list-group-item list-group-item-action px-3 border-0 active" aria-current="true">{{ $category->title }}</a>

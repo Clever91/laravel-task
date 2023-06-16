@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Score;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -16,6 +17,10 @@ class TaskController extends Controller
 
         if ($request->has("category_id")) {
             $tasks->where('category_id', $request->input('category_id'));
+        }
+
+        if ($request->has("score_id")) {
+            $tasks->where('score_id', $request->input('score_id'));
         }
 
         if ($request->has("done")) {
@@ -33,8 +38,10 @@ class TaskController extends Controller
         }
 
         $tasks = $tasks->paginate(12);
-        $categories = Category::where(['state' => Category::STATE_ACTIVE])->get();
 
-        return view('page.tasks', compact('tasks', 'categories'));
+        $categories = Category::where(['state' => Category::STATE_ACTIVE])->get();
+        $scores = Score::all();
+
+        return view('page.tasks', compact('tasks', 'categories', 'scores'));
     }
 }
