@@ -18,6 +18,10 @@ class TaskController extends Controller
             $tasks->where('category_id', $request->input('category_id'));
         }
 
+        if ($request->has("done")) {
+            $tasks->where('done', $request->input('done') == "solved");
+        }
+
         if ($request->has('q')) {
             $q = trim($request->input('q'));
             $tasks->where(function($query) use ($q, $request) {

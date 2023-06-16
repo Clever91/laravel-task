@@ -3,17 +3,6 @@
         <div class="col-md-2">
             <div class="row">
                 <div class="card">
-                    <div class="card-title"><h3>Filter</h3></div>
-                    <div class="card-body">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" />
-                            <label class="form-check-label">Solved</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" />
-                            <label class="form-check-label">Unsolved</label>
-                        </div>
-                    </div>
                     <div class="card-body">
                         <form method="get" action="{{ route('tasks') }}">
                             <div class="input-group">
@@ -27,6 +16,35 @@
                             </div>
                         </form>
                     </div>
+                    <hr>
+                    <form method="get" action="{{ route('tasks') }}">
+                        <div class="card-title"><h3>Filter</h3></div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="done" 
+                                    value="solved" @if (request()->input('done') == 'solved')
+                                        checked
+                                    @endif/>
+                                <label class="form-check-label">Solved</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="done" 
+                                    value="unsolved" @if (request()->input('done') == 'unsolved')
+                                        checked
+                                    @endif />
+                                <label class="form-check-label">Unsolved</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="done"/>
+                                <label class="form-check-label">All tasks</label>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="row">
