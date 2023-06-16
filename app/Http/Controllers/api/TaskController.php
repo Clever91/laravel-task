@@ -12,7 +12,7 @@ class TaskController extends Controller
 {
     public function all(Request $request)
     {
-        $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done', 'scores.ball')
+        $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done')
             ->where('active', Task::STATE_ACTIVE);
 
         if ($request->filled("category_id")) {
@@ -56,7 +56,7 @@ class TaskController extends Controller
 
     public function paginate(Request $request)
     {
-        $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done', 'scores.ball')
+        $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done')
             ->where('active', Task::STATE_ACTIVE);
 
         if ($request->filled("category_id")) {

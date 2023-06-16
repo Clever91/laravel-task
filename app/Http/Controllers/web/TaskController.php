@@ -41,19 +41,17 @@ class TaskController extends Controller
             $sorting = explode('_', $request->input('sort'));
             $sort = $sorting[0] ?? "category";
             $order = $sorting[1] ?? "asc";
-            dd($sort, $order);
             if ($sort == "category") {
-                $tasks->with(['category' => function($query) use ($order) {
-                    $query->orderBy('categories.title', $order);
-                }]);
+                $tasks->join('categories', 'tasks.category_id', '=', 'categories.id')
+                    ->orderBy('categories.title', $order);
             } else if ($sort == "score") {
-                $tasks->with(['score' => function($query) use ($order) {
-                    $query->orderBy('scores.ball', $order);
-                }]);
+                $tasks->join('scores', 'scores.id', '=', 'tasks.score_id')
+                    ->orderBy('scores.ball', $order);
             } else if ($sort == "done") {
                 $tasks->orderBy("done", $order);
             }
         }
+        
 
         $tasks = $tasks->paginate(12);
 
