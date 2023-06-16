@@ -37,11 +37,37 @@ class TaskController extends Controller
             });
         }
 
+        if ($request->filled('sort')) {
+            $sorting = explode('_', $request->input('sort'));
+            $sort = $sorting[0] ?? "category";
+            $order = $sorting[1] ?? "asc";
+            dd($sort, $order);
+            if ($sort == "category") {
+                $tasks->with(['category' => function($query) use ($order) {
+                    $query->orderBy('categories.title', $order);
+                }]);
+            } else if ($sort == "score") {
+                $tasks->with(['score' => function($query) use ($order) {
+                    $query->orderBy('scores.ball', $order);
+                }]);
+            } else if ($sort == "done") {
+                $tasks->orderBy("done", $order);
+            }
+        }
+
         $tasks = $tasks->paginate(12);
 
         $categories = Category::where(['state' => Category::STATE_ACTIVE])->get();
         $scores = Score::all();
+        $sorting = [
+            'category_desc' => "Category Down",
+            'category_asc' => "Category Up",
+            'score_desc' => "Score Down",
+            'score_asc' => "Score Up",
+            'done_desc' => "Solving Down",
+            'done_asc' => "Solving Up",
+        ];
 
-        return view('page.tasks', compact('tasks', 'categories', 'scores'));
+        return view('page.tasks', compact('tasks', 'categories', 'scores', 'sorting'));
     }
 }

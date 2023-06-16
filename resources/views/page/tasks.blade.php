@@ -18,6 +18,19 @@
                     </div>
                     <hr>
                     <form method="get" action="{{ route('tasks') }}">
+                        <div class="card-title">Sorting</div>
+                        <div class="card-body">
+                            <select class="form-select" name="sort">
+                                <option value="">Select sorting</option>
+                                @foreach ($sorting as $key => $label)
+                                @if ($key == request()->input('sort'))
+                                <option value="{{ $key }}" selected>{{ $label }}</option>
+                                @else
+                                <option value="{{ $key }}">{{ $label }}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="card-title">Filter</div>
                         <div class="card-body">
                             <div class="form-check">

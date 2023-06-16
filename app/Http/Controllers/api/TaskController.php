@@ -12,7 +12,7 @@ class TaskController extends Controller
 {
     public function all(Request $request)
     {
-        $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done')
+        $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done', 'scores.ball')
             ->where('active', Task::STATE_ACTIVE);
 
         if ($request->filled("category_id")) {
@@ -45,7 +45,7 @@ class TaskController extends Controller
                     ->orderBy('categories.title', $order);
             } else if ($sort == "score") {
                 $tasks->join('scores', 'scores.id', '=', 'tasks.score_id')
-                    ->orderBy('scores.name', $order);
+                    ->orderBy('scores.ball', $order);
             } else if ($sort == "done") {
                 $tasks->orderBy("done", $order);
             }
@@ -56,7 +56,7 @@ class TaskController extends Controller
 
     public function paginate(Request $request)
     {
-        $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done')
+        $tasks = Task::select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.category_id', 'tasks.score_id', 'tasks.done', 'scores.ball')
             ->where('active', Task::STATE_ACTIVE);
 
         if ($request->filled("category_id")) {
@@ -89,7 +89,7 @@ class TaskController extends Controller
                     ->orderBy('categories.title', $order);
             } else if ($sort == "score") {
                 $tasks->join('scores', 'scores.id', '=', 'tasks.score_id')
-                    ->orderBy('scores.name', $order);
+                    ->orderBy('scores.ball', $order);
             } else if ($sort == "done") {
                 $tasks->orderBy("done", $order);
             }
