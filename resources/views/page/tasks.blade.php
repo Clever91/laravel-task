@@ -14,6 +14,19 @@
                             <label class="form-check-label">Unsolved</label>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <form method="get" action="{{ route('tasks') }}">
+                            <div class="input-group">
+                                <div class="form-outline">
+                                    <input type="search" name="q" class="form-control" value="{{ $_GET['q'] }}" />
+                                    <label class="form-label" for="form1">Search</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -21,6 +34,7 @@
                     <div class="card-title"><h3>Categories</h3></div>
                     <div class="card-body">
                         <div class="list-group list-group-light">
+                            <a href="{{ route('tasks', []) }}" class="list-group-item list-group-item-action px-3 border-0" aria-current="true">All</a>
                             @foreach ($categories as $category)
                             @if (isset($_GET["category_id"]) && $category->id == $_GET["category_id"])
                             <a href="{{ route('tasks', ['category_id' => $category->id]) }}" class="list-group-item list-group-item-action px-3 border-0 active" aria-current="true">{{ $category->title }}</a>

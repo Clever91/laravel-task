@@ -18,6 +18,16 @@ class TaskController extends Controller
             $tasks->where('category_id', $request->input('category_id'));
         }
 
+        if ($request->has('q')) {
+            $q = $request->input('q');
+            $tasks->where(function($query) use ($q, $request) {
+                if ($request) {
+                    $query->where('tasks.title', 'LIKE', "%{$q}%");
+                    $query->orWhere('tasks.description', 'LIKE', "%{$q}%");
+                }
+            });
+        }
+
         $tasks = $tasks->paginate(12);
         $categories = Category::where(['state' => Category::STATE_ACTIVE])->get();
 
