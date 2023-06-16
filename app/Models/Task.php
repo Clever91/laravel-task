@@ -37,4 +37,9 @@ class Task extends Model
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    public function doneLabel()
+    {
+        return $this->done ? "Solved": "Unsolved";
+    }
 }

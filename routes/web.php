@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Task;
+use App\Http\Controllers\web\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tasks', function () {
-    $tasks = Task::all();
-    dd(Task::find(1)->tags);
-    return view('page.tasks', ['tasks' => $tasks]);
-});
+Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
