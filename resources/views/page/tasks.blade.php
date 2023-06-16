@@ -93,7 +93,7 @@
                         <div class="card">
                             <div class="card-header">
                                 {{ $task->category->title }}
-                                <cite title="{{ $task->score->name }}">
+                                <cite title="{{ $task->score->name }}" style="float: right;">
                                     <i class="fas fa-circle me-2 text-warning"></i>{{ $task->score->name }}
                                 </cite>
                             </div>
