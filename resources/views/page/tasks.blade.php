@@ -97,9 +97,11 @@
                                 </cite>
                             </div>
                             <div class="card-footer text-muted">
-                                <a href="#!" class="btn btn-outline-success btn-sm" data-mdb-ripple-color="dark">Tag</a>
-                                @foreach($task->tags as $index => $tag)
-                                <a href="#!" class="btn btn-outline-success btn-sm" data-mdb-ripple-color="dark">{{ $tag->name }}</a>
+                                @php
+                                    $classes = ['success', 'danger', 'warning', 'primary', 'info'];
+                                @endphp
+                                @foreach($task->tags as $tag)
+                                <a href="#" class="btn btn-outline-{{ $classes[random_int(0, 4)] }} btn-sm" data-mdb-ripple-color="dark">{{ $tag->name }}</a>
                                 @endforeach
                             </div>
                         </div>

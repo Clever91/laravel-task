@@ -143,6 +143,7 @@
             <!-- Container wrapper -->
         </nav>
         <!-- Navbar -->
+        <br>
 
         <div class="container-fluid">
             {{ $slot }}  

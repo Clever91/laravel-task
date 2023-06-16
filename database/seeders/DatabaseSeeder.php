@@ -34,14 +34,14 @@ class DatabaseSeeder extends Seeder
         foreach(Task::all() as $task) {
             for ($i=0; $i < random_int(1,4); $i++) {
                 $tag = Tag::find(random_int(1, 10));
-                $model = Taggable::where(['tag_id' => $tag->id, 'taggable_id' => $task->id, 'taggable_type' => 'tasks'])->get();
+                $model = Taggable::where(['tag_id' => $tag->id, 'taggable_id' => $task->id, 'taggable_type' => Task::class])->get();
                 if ($model->count() || empty($tag)) {
                     continue;
                 }
                 DB::table('taggables')->insert([
                     'tag_id' => $tag->id,
                     'taggable_id' => $task->id,
-                    'taggable_type' => 'tasks',
+                    'taggable_type' => Task::class,
                 ]);
             }
         }
